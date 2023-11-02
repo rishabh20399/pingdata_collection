@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="$HOME/repository_name/Airtel/DataCollection2.py"
+script_path="$HOME/pingdata_collection/airtel/DataCollection2.py"
+
+# Path to your Git repository
+repository_path="$HOME/pingdata_collection"
 
 # Specify the starting time to run your script
 start_time="22:00"
@@ -24,4 +27,13 @@ for ((day=0; day<15; day++)); do
         echo "Scheduled python script to run at $execution_time"
         start_time="$(date -d "$start_time +1 minute" +'%H:%M')"
     done
+
+    # After 4 iterations, commit and push changes to Git
+    if [[ $iteration -eq 3 ]]; then
+        cd "$repository_path"
+        git add .
+        git commit -m "Automated data collection"
+        git push
+        cd "$HOME"  # Return to the home directory
+    fi
 done
