@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 
 # Read websites from a text file
-with open('/data/data/com.termux/files/home/pingdata_collection/airtel/domain_list2.txt', 'r') as file:
+with open('/home/pingdata_collection/airtel/domain_list2.txt', 'r') as file:
     domain_names = file.read().splitlines()
 
 # Get the current date and time
@@ -15,7 +15,7 @@ date_str = now.strftime("%d_%m_%y")
 time_str = now.strftime("%H_%M_%S")
 
 # Specify the directory where Excel files are stored
-excel_dir = '/data/data/com.termux/files/home/pingdata_collection/airtel/data/'
+excel_dir = '/home/pingdata_collection/airtel/data/'
 
 # Check if the Excel file for the current day already exists or create a new one
 excel_file = os.path.join(excel_dir, f'{date_str}.xlsx')
