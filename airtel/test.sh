@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="/home/pingdata_collection/airtel/DataCollection2.py"
+script_path="/home/useland/pingdata_collection/airtel/DataCollection2.py"
 
 # Path to your Git repository
-repository_path="/home/pingdata_collection"
+repository_path="/home/useland/pingdata_collection"
 
 # Specify the current time as the starting time
 start_time=$(date +'%H:%M')
