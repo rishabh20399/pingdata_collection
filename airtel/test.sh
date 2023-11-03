@@ -46,6 +46,6 @@ git commit -m "Add files from data"
 
 # Link your local repository to the remote repository
 git remote add origin https://github.com/rishabh20399/pingdata_collection.git
-git push origin main -u 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
+git push origin main -u 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
 
 
