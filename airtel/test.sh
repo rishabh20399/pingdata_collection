@@ -33,7 +33,12 @@ for ((iteration=0; iteration<4; iteration++)); do
 done
 
 # After all 4 iterations, commit and push changes to Git
-cd "$repository_path"
-# Include your Git commands for add, commit, and push here
+cd '/home/userland/pingdata_collection/airtel/data/'
+git init
+git add .
+git commit -m "Add files from data"
 
-cd "/home/"  # Return to the home directory
+cd "$repository_path"
+# # Include your Git commands for add, commit, and push here
+
+# cd "/home/"  # Return to the home directory

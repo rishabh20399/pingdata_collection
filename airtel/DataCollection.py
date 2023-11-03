@@ -40,7 +40,7 @@ for domain in domain_names:
     try:
         # Run the ping command for IPv4
         start_time = datetime.now()
-        ping_result_v4 = subprocess.check_output(['ping', '-4', '-n', '40', '-l', '64', domain], text=True)
+        ping_result_v4 = subprocess.check_output(['ping', '-4', "-c", 40, "-s", 64, domain], text=True)
         end_time = datetime.now()
         execution_time_ms_v4 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
         # IPv4 result
@@ -49,7 +49,7 @@ for domain in domain_names:
 
         # Run the ping command for IPv6
         start_time = datetime.now()
-        ping_result_v6 = subprocess.check_output(['ping', '-6', '-n', '40', '-l', '64', domain], text=True)
+        ping_result_v6 = subprocess.check_output(['ping', '-6', "-c", 40, "-s", 64, domain], text=True)
         end_time = datetime.now()
         execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
         # IPv6 result
