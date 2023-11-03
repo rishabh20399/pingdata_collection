@@ -11,7 +11,7 @@ repository_path="/home/useland/pingdata_collection"
 # password="your_password"
 
 # Specify the starting time as "22:00"
-start_time="22:00"
+start_time="16:05"
 
 # Loop for 4 iterations
 for ((iteration=0; iteration<4; iteration++)); do
