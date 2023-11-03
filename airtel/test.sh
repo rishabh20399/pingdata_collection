@@ -6,7 +6,7 @@ script_path="/home/useland/pingdata_collection/airtel/DataCollection2.py"
 # Path to your Git repository
 repository_path="/home/useland/pingdata_collection"
 
-# Specify the starting time as "2200" for 22:00
+# Specify the starting time as "1645" for 16:45
 start_time="1645"  # Use your desired start time in HHMM format
 
 # Get the current date in 'YYYY-MM-DD' format
@@ -16,20 +16,20 @@ current_date=$(date +'%Y-%m-%d')
 for ((iteration=0; iteration<4; iteration++)); do
     execution_time="$current_date $start_time"
 
-    # Wait for the previous iteration to complete (if not the first iteration)
-    if [[ $iteration -gt 0 ]]; then
-        while jobs %% &>/dev/null; do
-            sleep 600  # Wait for 600 seconds before checking again
-        done
-    fi
+    # Schedule the script to run in the background
+    python3 "$script_path" &
 
-    # Schedule the script using 'at'
-    echo "python3 $script_path" | at "$execution_time"
-    echo "Scheduled python script to run at $execution_time"
+    # Wait for the current iteration to complete
+    wait
+
+
+    # Print a message for each iteration
+    echo "Iteration $((iteration + 1)) completed"
+
 done
 
-# Wait for all iterations to complete
-while jobs %% &>/dev/null; do
-    sleep 600
-done
+# After all 4 iterations, commit and push changes to Git
+cd "$repository_path"
+# Include your Git commands for add, commit, and push here
 
+cd "/home/"  # Return to the home directory
