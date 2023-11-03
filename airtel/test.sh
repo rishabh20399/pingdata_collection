@@ -3,6 +3,8 @@
 # Path to your Python script
 script_path="/home/userland/pingdata_collection/airtel/DataCollection2.py"
 
+mkdir /home/userland/pingdata_collection/airtel/data/
+
 # Path to your Git repository
 repository_path="/home/userland/pingdata_collection"
 
@@ -15,6 +17,8 @@ current_date=$(date +'%Y-%m-%d')
 # Loop for 4 iterations
 for ((iteration=0; iteration<4; iteration++)); do
     execution_time="$current_date $start_time"
+
+    echo "Iteration $((iteration + 1)) running..."
 
     # Schedule the script to run in the background
     python3 "$script_path" &
