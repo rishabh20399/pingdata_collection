@@ -11,11 +11,14 @@ repository_path="/home/useland/pingdata_collection"
 # password="your_password"
 
 # Specify the starting time as "22:00"
-start_time="16:05"
+start_time="16:45"
+
+# Get the current date in 'YYYY-MM-DD' format
+current_date=$(date +'%Y-%m-%d')
 
 # Loop for 4 iterations
 for ((iteration=0; iteration<4; iteration++)); do
-    execution_time="$(date +'%Y-%m-%d') $start_time"
+    execution_time="$current_date $start_time"
 
     # Wait for the previous iteration to complete (if not the first iteration)
     if [[ $iteration -gt 0 ]]; then
