@@ -39,9 +39,13 @@ git config --global user.name "rishabh20399"
 git config --global init.defaultBranch main
 
 # After all 4 iterations, commit and push changes to Git
-cd '/home/userland/pingdata_collection/airtel/data/'
+cd /home/userland/pingdata_collection/airtel/data
 git init
 git add .
 git commit -m "Add files from data"
+
+# Link your local repository to the remote repository
+git remote add origin https://github.com/rishabh20399/pingdata_collection.git
+git push origin main
 
 
