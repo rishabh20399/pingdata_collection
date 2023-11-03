@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="/home/useland/pingdata_collection/airtel/DataCollection2.py"
+script_path="/home/userland/pingdata_collection/airtel/DataCollection2.py"
 
 # Path to your Git repository
-repository_path="/home/useland/pingdata_collection"
+repository_path="/home/userland/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
-start_time="1645"  # Use your desired start time in HHMM format
+start_time="1750"  # Use your desired start time in HHMM format
 
 # Get the current date in 'YYYY-MM-DD' format
 current_date=$(date +'%Y-%m-%d')
