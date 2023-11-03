@@ -9,7 +9,7 @@ mkdir /home/userland/pingdata_collection/airtel/data/
 repository_path="/home/userland/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
-start_time="1750"  # Use your desired start time in HHMM format
+start_time="1800"  # Use your desired start time in HHMM format
 
 # Get the current date in 'YYYY-MM-DD' format
 current_date=$(date +'%Y-%m-%d')
