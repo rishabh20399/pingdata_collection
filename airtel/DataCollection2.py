@@ -86,15 +86,15 @@ for domain in domain_names:
             geolocation_data_v6 = geolocation_response_v6.json()
             geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
-            domains.append(domain_name)
-            ipv4_addresses.append(ipv4_address)
-            ipv6_addresses.append(ipv6_address)
-            latency_v4_list.append(latency_v4)
-            latency_v6_list.append(latency_v6)
-            geolocation_v4_list.append(geolocation_info_v4)
-            geolocation_v6_list.append(geolocation_info_v6)
-            time_taken_v4_list.append(execution_time_ms_v4)
-            time_taken_v6_list.append(execution_time_ms_v6)
+        domains.append(domain_name)
+        ipv4_addresses.append(ipv4_address)
+        ipv6_addresses.append(ipv6_address)
+        latency_v4_list.append(latency_v4)
+        latency_v6_list.append(latency_v6)
+        geolocation_v4_list.append(geolocation_info_v4)
+        geolocation_v6_list.append(geolocation_info_v6)
+        time_taken_v4_list.append(execution_time_ms_v4)
+        time_taken_v6_list.append(execution_time_ms_v6)
 
     except subprocess.CalledProcessError as e:
         print(f"Error pinging {domain}: {e}")
