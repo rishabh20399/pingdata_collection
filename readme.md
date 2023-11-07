@@ -3,6 +3,7 @@
 ```
 pkg install tsu
 pkg install openssh
+pkg install git
 pkg install traceroute
 
 pkg install python
