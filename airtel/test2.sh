@@ -24,7 +24,7 @@ days_to_run=1
 iteration=0
 
 # Run the script once a day for 15 days starting from the specified date
-while [ $iteration -lt $days_to_run ]; do
+while [ $iteration -lt $days_to_run ]: do
     # Get the current date in 'YYYY-MM-DD' format
     current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d")
 
