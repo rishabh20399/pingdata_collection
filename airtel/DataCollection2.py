@@ -11,10 +11,11 @@ def collect_ping_data(num, domain, ping_count, ping_size):
     # Lists to store data for each ping
     data = []
     
-    for i in range(ping_count):
-        data.append([""] * 9)
+    # for i in range(ping_count):
+        
 
     for _ in range(ping_count):
+        data.append([""] * 9)
         data[num][0] =domain
         try:
             # Run the ping command for IPv4
@@ -108,15 +109,15 @@ for domain in domain_names:
     data = collect_ping_data(num, domain, ping_count, ping_size)
     num +=ping_count
 
-    # Append data to the CSV file
-    with open(csv_file, 'a', newline='') as csvf:
-        csv_writer = csv.writer(csvf)
-        for row in data:
-            # Add the column names if they are not already added
-            if os.path.getsize(csv_file) == 0:
-                csv_writer.writerow(["Domain", "IPv4 Address", "IPv6 Address", "IPv4 Latency (ms)", "IPv6 Latency (ms)", "IPv4 Geolocation", "IPv6 Geolocation", "IPv4 Execution Time (ms)", "IPv6 Execution Time (ms)"])
-            
-            # Append the data to the CSV file
-            csv_writer.writerow(row)
+# Append data to the CSV file
+with open(csv_file, 'a', newline='') as csvf:
+    csv_writer = csv.writer(csvf)
+    for row in data:
+        # Add the column names if they are not already added
+        if os.path.getsize(csv_file) == 0:
+            csv_writer.writerow(["Domain", "IPv4 Address", "IPv6 Address", "IPv4 Latency (ms)", "IPv6 Latency (ms)", "IPv4 Geolocation", "IPv6 Geolocation", "IPv4 Execution Time (ms)", "IPv6 Execution Time (ms)"])
+        
+        # Append the data to the CSV file
+        csv_writer.writerow(row)
 
 print(f"Data saved to {csv_file}")
