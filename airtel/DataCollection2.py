@@ -59,8 +59,8 @@ def collect_ping_data(domain, ping_count, ping_size):
                 #         data[i][6] = geolocation_info_v6
                 #         data[i][8] = str(execution_time_ms_v6)
                 #         break
-            row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
-            data.append(row)
+                row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
+                data.append(row)
         
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
