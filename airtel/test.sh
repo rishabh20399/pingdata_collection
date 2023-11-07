@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="DataCollection2.py"
+script_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
 
-data_dir="data/data/com.termux/files/home/pingdata_collection/airtel/data"
+data_dir="/data/data/com.termux/files/home/pingdata_collection/airtel/data"
 
 # Check if the data directory exists, and if not, create it
 if [ ! -d "$data_dir" ]; then
@@ -11,7 +11,7 @@ if [ ! -d "$data_dir" ]; then
 fi
 
 # Path to your Git repository
-repository_path="data/data/com.termux/files/home/pingdata_collection"
+repository_path="/data/data/com.termux/files/home/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
 start_time="1315"  # Use your desired start time in HHMM format
@@ -44,11 +44,11 @@ git config --global user.name "rishabh20399"
 # git config --global init.defaultBranch main
 
 # After all 4 iterations, commit and push changes to Git
-cd data/data/com.termux/files/home/pingdata_collection
+cd /data/data/com.termux/files/home/pingdata_collection
 git remote set-url origin git@github.com:rishabh20399/pingdata_collection.git
 
 git checkout -b my-changes
-git add data/data/com.termux/files/home/pingdata_collection/airtel/data
+git add /data/data/com.termux/files/home/pingdata_collection/airtel/data
 git commit -m "Add files from data"
 git push origin my-changes
 
