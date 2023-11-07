@@ -14,13 +14,13 @@ fi
 repository_path="/data/data/com.termux/files/home/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
-start_time="0800"  # Use your desired start time in HHMM format
+start_time="2305"  # Use your desired start time in HHMM format
 
 # Specify the starting date in 'YYYY-MM-DD' format
 start_date="2023-11-07"  # Use your desired starting date
 
 # Specify the number of days to run
-days_to_run=15
+days_to_run=1
 iteration=0
 
 # Run the script once a day for 15 days starting from the specified date
