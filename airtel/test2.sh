@@ -73,4 +73,4 @@ while [ $iteration -lt $days_to_run ]; do
 
     # Increment the iteration count
     iteration=$((iteration + 1))
-done
+# done
