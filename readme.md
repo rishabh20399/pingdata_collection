@@ -28,7 +28,7 @@ Copy the entire content of the public key to your clipboard.
 5. Add SSH Key to Your GitHub Account (Or Other Git Hosts):
 If you're using GitHub or another Git hosting service, log in to your account and navigate to your account settings. Look for the SSH key settings, often labeled "SSH and GPG keys" or similar.
 
-    a. Click "New SSH key" or equivalent.
-    b. Paste your public key into the key field.
-    c. Give your SSH key a meaningful title (e.g., "My Laptop SSH Key").
-    d. Save your new SSH key.
+    a. Click "New SSH key" or equivalent.</br>
+    b. Paste your public key into the key field.</br>
+    c. Give your SSH key a meaningful title (e.g., "My Laptop SSH Key").</br>
+    d. Save your new SSH key.</br>
