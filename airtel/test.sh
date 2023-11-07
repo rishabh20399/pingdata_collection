@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="/home/userland/pingdata_collection/airtel/DataCollection2.py"
+script_path="data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
 
-data_dir="/home/userland/pingdata_collection/airtel/data"
+data_dir="data/data/com.termux/files/home/pingdata_collection/airtel/data"
 
 # Check if the data directory exists, and if not, create it
 if [ ! -d "$data_dir" ]; then
