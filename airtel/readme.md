@@ -3,8 +3,8 @@
 git clone git@github.com:username/pingdata_collection.git
 
 ```
-Replace "username" with your username
-</br>
+Replace "username" with your username</br>
+  </br>
 2. Run test.sh first to ensure that everything runs smoothly on your side
 ```
 cd pingdata_collection
