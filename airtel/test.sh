@@ -11,10 +11,10 @@ if [ ! -d "$data_dir" ]; then
 fi
 
 # Path to your Git repository
-repository_path="/home/userland/pingdata_collection"
+repository_path="data/data/com.termux/files/home/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
-start_time="1835"  # Use your desired start time in HHMM format
+start_time="1315"  # Use your desired start time in HHMM format
 
 # Get the current date in 'YYYY-MM-DD' format
 current_date=$(date +'%Y-%m-%d')
@@ -44,11 +44,11 @@ git config --global user.name "rishabh20399"
 # git config --global init.defaultBranch main
 
 # After all 4 iterations, commit and push changes to Git
-cd /home/userland/pingdata_collection
+cd data/data/com.termux/files/home/pingdata_collection
 git remote set-url origin git@github.com:rishabh20399/pingdata_collection.git
 
 git checkout -b my-changes
-git add /home/userland/pingdata_collection/airtel/data
+git add data/data/com.termux/files/home/pingdata_collection/airtel/data
 git commit -m "Add files from data"
 git push origin my-changes
 

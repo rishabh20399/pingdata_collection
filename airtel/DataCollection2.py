@@ -68,7 +68,7 @@ def collect_ping_data(domain, ping_count, ping_size):
     return data
 
 # Read websites from a text file
-with open('/home/userland/pingdata_collection/airtel/domain_list2.txt', 'r') as file:
+with open('data/data/com.termux/files/home/pingdata_collection/airtel/domain_list2.txt', 'r') as file:
     domain_names = file.read().splitlines()
 
 # Set the number of pings and ping size
@@ -80,7 +80,7 @@ now = datetime.now()
 date_str = now.strftime("%d_%m_%y")
 
 # Create a subdirectory for the current day
-day_dir = os.path.join('/home/userland/pingdata_collection/airtel/data/', date_str)
+day_dir = os.path.join('data/data/com.termux/files/home/pingdata_collection/airtel/data/', date_str)
 os.makedirs(day_dir, exist_ok=True)
 
 # Create a CSV file with a timestamp as the name for the current run
