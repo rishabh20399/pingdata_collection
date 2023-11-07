@@ -10,11 +10,12 @@ import csv
 def collect_ping_data(num, domain, ping_count, ping_size):
     # Lists to store data for each ping
     data = []
-    data[num][0] =domain
+    
     for i in range(num + 1):
         data.append([""] * 9)
 
     for _ in range(ping_count):
+        data[num][0] =domain
         try:
             # Run the ping command for IPv4
             start_time = datetime.now()
@@ -73,7 +74,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 # break
                 # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
                 # data.append(row)
-        
+            num +=1
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
 
@@ -103,7 +104,7 @@ csv_file = os.path.join(day_dir, f'{timestamp_str}.csv')
 # Collect and append data for each domain
 for domain in domain_names:
     data = collect_ping_data(num, domain, ping_count, ping_size)
-    num +=1
+    num +=40
 
     # Append data to the CSV file
     with open(csv_file, 'a', newline='') as csvf:
