@@ -32,8 +32,6 @@ def collect_ping_data(domain, ping_count, ping_size):
                 geolocation_data_v4 = geolocation_response_v4.json()
                 geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
 
-                row = [domain_name, ipv4_address, "", str(latency_v4), "", geolocation_info_v4, "", str(execution_time_ms_v4), ""]
-                data.append(row)
 
             # Run the ping6 command for IPv6
             start_time = datetime.now()
@@ -54,14 +52,16 @@ def collect_ping_data(domain, ping_count, ping_size):
                 geolocation_data_v6 = geolocation_response_v6.json()
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
-                for i in range(len(data)):
-                    if data[i][0] == domain:
-                        data[i][2] = ipv6_address
-                        data[i][4] = str(latency_v6)
-                        data[i][6] = geolocation_info_v6
-                        data[i][8] = str(execution_time_ms_v6)
-                        break
-
+                # for i in range(len(data)):
+                #     if data[i][0] == domain:
+                #         data[i][2] = ipv6_address
+                #         data[i][4] = str(latency_v6)
+                #         data[i][6] = geolocation_info_v6
+                #         data[i][8] = str(execution_time_ms_v6)
+                #         break
+            row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
+            data.append(row)
+        
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
 
@@ -94,6 +94,12 @@ for domain in domain_names:
     # Append data to the CSV file
     with open(csv_file, 'a', newline='') as csvf:
         csv_writer = csv.writer(csvf)
-        csv_writer.writerows(data)
+        for row in data:
+            # Add the column names if they are not already added
+            if os.path.getsize(csv_file) == 0:
+                csv_writer.writerow(["Domain", "IPv4 Address", "IPv6 Address", "IPv4 Latency (ms)", "IPv6 Latency (ms)", "IPv4 Geolocation", "IPv6 Geolocation", "IPv4 Execution Time (ms)", "IPv6 Execution Time (ms)"])
+            
+            # Append the data to the CSV file
+            csv_writer.writerow(row)
 
 print(f"Data saved to {csv_file}")
