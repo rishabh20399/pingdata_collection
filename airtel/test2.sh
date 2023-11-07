@@ -16,14 +16,17 @@ repository_path="/data/data/com.termux/files/home/pingdata_collection"
 # Specify the starting time as "1645" for 16:45
 start_time="0800"  # Use your desired start time in HHMM format
 
-# Set the number of days to run
-days_to_run=1
+# Specify the starting date in 'YYYY-MM-DD' format
+start_date="2023-11-08"  # Use your desired starting date
+
+# Specify the number of days to run
+days_to_run=15
 iteration=0
 
-# Run the script once a day for 15 days
+# Run the script once a day for 15 days starting from the specified date
 while [ $iteration -lt $days_to_run ]; do
     # Get the current date in 'YYYY-MM-DD' format
-    current_date=$(date +'%Y-%m-%d')
+    current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d")
 
     # Check if it's the time to run
     current_time=$(date +'%H%M')
