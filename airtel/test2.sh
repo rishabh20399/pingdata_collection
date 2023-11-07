@@ -17,7 +17,7 @@ repository_path="/data/data/com.termux/files/home/pingdata_collection"
 start_time="0800"  # Use your desired start time in HHMM format
 
 # Specify the starting date in 'YYYY-MM-DD' format
-start_date="2023-11-08"  # Use your desired starting date
+start_date="2023-11-07"  # Use your desired starting date
 
 # Specify the number of days to run
 days_to_run=15
@@ -58,4 +58,7 @@ while [ $iteration -lt $days_to_run ]; do
         echo "Waiting for the scheduled time..."
         sleep 60  # Sleep for 1 minute before checking the time again
     fi
+
+    # Increment the iteration count
+    iteration=$((iteration + 1))
 done
