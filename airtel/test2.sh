@@ -45,12 +45,10 @@ while [ $iteration -lt $days_to_run ]; do
             # Wait for the current iteration to complete
             wait
 
-
             # Print a message for each iteration
             echo "Iteration $((iter + 1)) completed"
 
         done
-
 
         # Configure your Git identity
         git config --global user.email "rishabh20399@iiitd.ac.in"
@@ -73,4 +71,5 @@ while [ $iteration -lt $days_to_run ]; do
 
     # Increment the iteration count
     iteration=$((iteration + 1))
-# done
+
+done
