@@ -14,7 +14,7 @@ fi
 repository_path="/data/data/com.termux/files/home/pingdata_collection"
 
 # Specify the starting time as "1645" for 16:45
-start_time="2305"  # Use your desired start time in HHMM format
+start_time="2325"  # Use your desired start time in HHMM format
 
 # Specify the starting date in 'YYYY-MM-DD' format
 start_date="2023-11-07"  # Use your desired starting date
@@ -24,7 +24,7 @@ days_to_run=1
 iteration=0
 
 # Run the script once a day for 15 days starting from the specified date
-while [ $iteration -lt $days_to_run ]:
+while [ $iteration -lt $days_to_run ]
 do
     # Get the current date in 'YYYY-MM-DD' format
     current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d")
@@ -66,7 +66,7 @@ do
         git add /data/data/com.termux/files/home/pingdata_collection/airtel/data
         git commit -m "Add files from data"
         git push origin my-changes
-        
+
     else
         echo "Waiting for the scheduled time..."
         sleep 60  # Sleep for 1 minute before checking the time again
