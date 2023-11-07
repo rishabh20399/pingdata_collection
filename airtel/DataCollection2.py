@@ -10,7 +10,7 @@ import csv
 def collect_ping_data(num, domain, ping_count, ping_size):
     # Lists to store data for each ping
     data = []
-
+    data[num][0] =domain
     for i in range(num + 1):
         data.append([""] * 9)
 
