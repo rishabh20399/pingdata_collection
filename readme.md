@@ -1,6 +1,7 @@
 1. [Install termux](https://f-droid.org/en/packages/com.termux/) on your device running the ISP(Internet Service Provider) you want to collect data for.
 2. Now install and update some required packages
 ```
+pkg install tsu
 pkg install openssh
 pkg install traceroute
 
