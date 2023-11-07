@@ -3,7 +3,12 @@
 # Path to your Python script
 script_path="/home/userland/pingdata_collection/airtel/DataCollection2.py"
 
-mkdir /home/userland/pingdata_collection/airtel/data/
+data_dir="/home/userland/pingdata_collection/airtel/data"
+
+# Check if the data directory exists, and if not, create it
+if [ ! -d "$data_dir" ]; then
+  mkdir -p "$data_dir"
+fi
 
 # Path to your Git repository
 repository_path="/home/userland/pingdata_collection"

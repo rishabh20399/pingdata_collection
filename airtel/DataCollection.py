@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 
 # Read websites from a text file
-with open('D:\Sem7\WN\Project\WNproject_Group15\domain_list.txt', 'r') as file:
+with open('D:\Sem7\WN\Project\WNproject_Group15\domain_list2.txt', 'r') as file:
     domain_names = file.read().splitlines()
 
 # Get the current date and time
@@ -15,7 +15,7 @@ date_str = now.strftime("%d_%m_%y")
 time_str = now.strftime("%H_%M_%S")
 
 # Specify the directory where Excel files are stored
-excel_dir = '$HOME/repository_name/Airtel/data/'
+excel_dir = 'D:\\Sem7\\WN\\Project\\WNproject_Group15\\airtel'
 
 # Check if the Excel file for the current day already exists or create a new one
 excel_file = os.path.join(excel_dir, f'{date_str}.xlsx')
@@ -40,7 +40,7 @@ for domain in domain_names:
     try:
         # Run the ping command for IPv4
         start_time = datetime.now()
-        ping_result_v4 = subprocess.check_output(['ping', '-4', "-c", 40, "-s", 64, domain], text=True)
+        ping_result_v4 = subprocess.check_output(['ping', '-4', domain], text=True)
         end_time = datetime.now()
         execution_time_ms_v4 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
         # IPv4 result
@@ -49,7 +49,7 @@ for domain in domain_names:
 
         # Run the ping command for IPv6
         start_time = datetime.now()
-        ping_result_v6 = subprocess.check_output(['ping', '-6', "-c", 40, "-s", 64, domain], text=True)
+        ping_result_v6 = subprocess.check_output(['ping', '-6', domain], text=True)
         end_time = datetime.now()
         execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
         # IPv6 result
@@ -66,14 +66,14 @@ for domain in domain_names:
             geolocation_data_v4 = geolocation_response_v4.json()
             geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
 
-            # domains.append(domain_name)
-            # ipv4_addresses.append(ipv4_address)
+            domains.append(domain_name)
+            ipv4_addresses.append(ipv4_address)
             # ipv6_addresses.append("")
-            # latency_v4_list.append(latency_v4)
+            latency_v4_list.append(latency_v4)
             # latency_v6_list.append("")
-            # geolocation_v4_list.append(geolocation_info_v4)
+            geolocation_v4_list.append(geolocation_info_v4)
             # geolocation_v6_list.append("")
-            # time_taken_v4_list.append(execution_time_ms_v4)
+            time_taken_v4_list.append(execution_time_ms_v4)
             # time_taken_v6_list.append("")
 
         if ip_match_v6 and latency_match_v6:
@@ -86,14 +86,14 @@ for domain in domain_names:
             geolocation_data_v6 = geolocation_response_v6.json()
             geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
-            domains.append(domain_name)
-            ipv4_addresses.append(ipv4_address)
+            # domains.append(domain_name)
+            # ipv4_addresses.append(ipv4_address)
             ipv6_addresses.append(ipv6_address)
-            latency_v4_list.append(latency_v4)
+            # latency_v4_list.append(latency_v4)
             latency_v6_list.append(latency_v6)
-            geolocation_v4_list.append(geolocation_info_v4)
+            # geolocation_v4_list.append(geolocation_info_v4)
             geolocation_v6_list.append(geolocation_info_v6)
-            time_taken_v4_list.append(execution_time_ms_v4)
+            # time_taken_v4_list.append(execution_time_ms_v4)
             time_taken_v6_list.append(execution_time_ms_v6)
 
     except subprocess.CalledProcessError as e:
