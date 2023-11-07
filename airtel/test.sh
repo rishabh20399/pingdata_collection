@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to your Python script
-script_path="/DataCollection2.py"
+script_path="DataCollection2.py"
 
 data_dir="data/data/com.termux/files/home/pingdata_collection/airtel/data"
 
