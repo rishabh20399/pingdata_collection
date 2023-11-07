@@ -24,7 +24,8 @@ days_to_run=1
 iteration=0
 
 # Run the script once a day for 15 days starting from the specified date
-while [ $iteration -lt $days_to_run ]: do
+while [ $iteration -lt $days_to_run ]:
+do
     # Get the current date in 'YYYY-MM-DD' format
     current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d")
 
@@ -33,27 +34,39 @@ while [ $iteration -lt $days_to_run ]: do
     if [ "$current_time" -ge "$start_time" ]; then
         echo "Running the script for $current_date at $current_time..."
 
-        # Schedule the script to run in the background
-        python3 "$script_path" &
+        # Loop for 4 iterations
+        for ((iter=0; iter<4; iter++)); do
+            execution_time="$current_date $start_time"
 
-        # Wait for the current iteration to complete
-        wait
+            echo "Iteration $((iter + 1)) running..."
 
-        echo "Script for $current_date completed."
-        iteration=$((iteration + 1))
+            # Schedule the script to run in the background
+            python3 "$script_path" &
+
+            # Wait for the current iteration to complete
+            wait
+
+
+            # Print a message for each iteration
+            echo "Iteration $((iter + 1)) completed"
+
+        done
+
 
         # Configure your Git identity
         git config --global user.email "rishabh20399@iiitd.ac.in"
         git config --global user.name "rishabh20399"
+        # git config --global init.defaultBranch main
 
-        # After each iteration, commit and push changes to Git
-        cd "$repository_path"
+        # After all 4 iterations, commit and push changes to Git
+        cd /data/data/com.termux/files/home/pingdata_collection
         git remote set-url origin git@github.com:rishabh20399/pingdata_collection.git
 
         git checkout -b my-changes
-        git add "$data_dir"
+        git add /data/data/com.termux/files/home/pingdata_collection/airtel/data
         git commit -m "Add files from data"
         git push origin my-changes
+        
     else
         echo "Waiting for the scheduled time..."
         sleep 60  # Sleep for 1 minute before checking the time again
