@@ -14,7 +14,7 @@ def collect_ping_data(domain, ping_count, ping_size):
         try:
             # Run the ping command for IPv4
             start_time = datetime.now()
-            ping_result_v4 = subprocess.check_output(['ping', '-c', '-4', '-s', ping_size, domain], text=True)
+            ping_result_v4 = subprocess.check_output(['ping', '-c', '1', '-s', ping_size, domain], text=True)
             end_time = datetime.now()
             execution_time_ms_v4 = (end_time - start_time).total_seconds() * 1000
 
@@ -37,7 +37,7 @@ def collect_ping_data(domain, ping_count, ping_size):
 
             # Run the ping6 command for IPv6
             start_time = datetime.now()
-            ping_result_v6 = subprocess.check_output(['ping6', '-c', '-4', '-s', ping_size, domain], text=True)
+            ping_result_v6 = subprocess.check_output(['ping6', '-c', '1', '-s', ping_size, domain], text=True)
             end_time = datetime.now()
             execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000
 
