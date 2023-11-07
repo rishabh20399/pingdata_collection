@@ -33,12 +33,12 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
 
             # for i in range(len(data)):
-                if data[num][0] == domain:
-                    data[num][1] = ipv4_address
-                    data[num][3] = str(latency_v4)
-                    data[num][5] = geolocation_info_v4
-                    data[num][7] = str(execution_time_ms_v4)
-                    break
+                # if data[num][0] == domain:
+                data[num][1] = ipv4_address
+                data[num][3] = str(latency_v4)
+                data[num][5] = geolocation_info_v4
+                data[num][7] = str(execution_time_ms_v4)
+                # break
 
 
             # Run the ping6 command for IPv6
@@ -61,12 +61,12 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
             # for i in range(len(data)):
-                if data[num][0] == domain:
-                    data[num][2] = ipv6_address
-                    data[num][4] = str(latency_v6)
-                    data[num][6] = geolocation_info_v6
-                    data[num][8] = str(execution_time_ms_v6)
-                    break
+            # if data[num][0] == domain:
+                data[num][2] = ipv6_address
+                data[num][4] = str(latency_v6)
+                data[num][6] = geolocation_info_v6
+                data[num][8] = str(execution_time_ms_v6)
+                # break
                 # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
                 # data.append(row)
         
