@@ -61,7 +61,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             latency_match_v6 = re.findall(r"time=(\d+\.\d+) ms", ping_result_v6)
 
             if ip_match_v6 and latency_match_v6:
-                ipv6_address = ip_match_v6.group(2)
+                ipv6_address = ip_match_v6.group(1)
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
                 # Get geolocation based on IPv6 address using ip-api.com
