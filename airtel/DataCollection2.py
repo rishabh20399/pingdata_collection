@@ -15,9 +15,12 @@ def collect_ping_data(num, domain, ping_count, ping_size):
         
 
     for _ in range(ping_count):
-        data.append([""] * 9)
-        data[num][0] =domain
+        # data.append([""] * 9)
+        # data[num][0] =domain
         try:
+            data_point = [""] * 9
+            data_point[0] = domain
+
             # Run the ping command for IPv4
             start_time = datetime.now()
             ping_result_v4 = subprocess.check_output(['ping', '-c', '1', '-s', str(ping_size), domain], text=True)
@@ -40,10 +43,10 @@ def collect_ping_data(num, domain, ping_count, ping_size):
 
             # for i in range(len(data)):
                 # if data[num][0] == domain:
-                data[num][1] = ipv4_address
-                data[num][3] = str(latency_v4)
-                data[num][5] = geolocation_info_v4
-                data[num][7] = str(execution_time_ms_v4)
+                data_point[1] = ipv4_address
+                data_point[3] = str(latency_v4)
+                data_point[5] = geolocation_info_v4
+                data_point[7] = str(execution_time_ms_v4)
                 # break
 
 
@@ -68,13 +71,14 @@ def collect_ping_data(num, domain, ping_count, ping_size):
 
             # for i in range(len(data)):
             # if data[num][0] == domain:
-                data[num][2] = ipv6_address
-                data[num][4] = str(latency_v6)
-                data[num][6] = geolocation_info_v6
-                data[num][8] = str(execution_time_ms_v6)
+                data_point[2] = ipv6_address
+                data_point[4] = str(latency_v6)
+                data_point[6] = geolocation_info_v6
+                data_point[8] = str(execution_time_ms_v6)
                 # break
                 # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
                 # data.append(row)
+            data.append(data_point)
             
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
