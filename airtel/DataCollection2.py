@@ -57,8 +57,8 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000
 
             # IPv6 result
-            ip_match_v6 = re.search(r'PING (.+) \(([^)]+)\)', ping_result_v6)
-            latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
+            ip_match_v6 = re.search(r"PING (.+?) \(\d+\.\d+\.\d+\.\d+\) ", ping_result_v6)
+            latency_match_v6 = re.findall(r"time=(\d+\.\d+) ms", ping_result_v6)
 
             if ip_match_v6 and latency_match_v6:
                 ipv6_address = ip_match_v6.group(2)
@@ -79,7 +79,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
                 # data.append(row)
             data.append(data_point)
-            
+
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
 
