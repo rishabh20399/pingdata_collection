@@ -71,7 +71,7 @@ while [ $iteration -lt $days_to_run ]; do
 
     else
         echo "Waiting for the scheduled time..."
-        sleep 60  # Sleep for 1 minute before checking the time again
+        sleep 10  # Sleep for 10 secs before checking the time again
     fi
 
     # Increment the iteration count

@@ -26,6 +26,7 @@ with open(input_file, "r") as file:
     lines = file.readlines()
 
 # Process the traceroute data
+times_list=[]
 for line in lines:
     # Use regular expressions to extract relevant information from each line
     match = re.match(r"(\d+)\s+([\w.]+)\s+\(([\d.]+)\)\s+(.+) ms", line)
