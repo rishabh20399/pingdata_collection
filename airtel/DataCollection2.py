@@ -97,7 +97,7 @@ now = datetime.now()
 date_str = now.strftime("%d_%m_%y")
 
 # Create a subdirectory for the current day
-day_dir = os.path.join('/data/data/com.termux/files/home/pingdata_collection/airtel/data/', date_str)
+day_dir = os.path.join('/data/data/com.termux/files/home/pingdata_collection/airtel/', date_str)
 os.makedirs(day_dir, exist_ok=True)
 
 # Create a CSV file with a timestamp as the name for the current run
