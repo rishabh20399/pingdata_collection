@@ -2,6 +2,7 @@
 
 # Path to your Python script
 script_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
+script2_path="/data/data/com.termux/files/home/pingdata_collection/airtel/tracerouteData.py"
 
 data_dir="/data/data/com.termux/files/home/pingdata_collection/airtel/data"
 
@@ -26,7 +27,7 @@ iteration=0
 # Run the script once a day for 15 days starting from the specified date
 while [ $iteration -lt $days_to_run ]; do
   # Get the current date in 'YYYY-MM-DD' format
-    current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d")
+    current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d')
 
     # Check if it's the time to run
     current_time=$(date +'%H%M')
@@ -49,6 +50,10 @@ while [ $iteration -lt $days_to_run ]; do
             echo "Iteration $((iter + 1)) completed"
 
         done
+
+        # After running script1 four times, execute script2
+        echo "Executing traceroute data collection..."
+        python3 "$script2_path"
 
         # Configure your Git identity
         git config --global user.email "rishabh20399@iiitd.ac.in"
