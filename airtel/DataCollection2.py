@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 import os
 import csv
+import socket
 
 # Function to collect ping data for a domain
 def collect_ping_data(num, domain, ping_count, ping_size):
@@ -44,13 +45,13 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_data_v4 = geolocation_response_v4.json()
                 geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
 
-                print("dfbfbrtbwrbrbrtbr---1")
+                # print("dfbfbrtbwrbrbrtbr---1")
                 data_point[1] = ipv4_address
                 data_point[3] = str(latency_v4)
                 data_point[5] = geolocation_info_v4
                 data_point[7] = str(execution_time_ms_v4)
 
-            print("dfbfbrtbwrbrbrtbr---1.5")
+            # print("dfbfbrtbwrbrbrtbr---1.5")
             # Run the ping6 command for IPv6
             start_time = datetime.now()
             ping_result_v6 = subprocess.check_output(['ping6', '-c', '1', '-s', str(ping_size), domain], text=True)
@@ -61,10 +62,11 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             ip_match_v6 = re.search(r'PING (.+?)\(([^)]+)\)', ping_result_v6)
             latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
 
-            print(ip_match_v6)
+            # print(latency_match_v6)
             if ip_match_v6 and latency_match_v6:
-                print("dfbfbrtbwrbrbrtbr---1.6")
-                ipv6_address = ip_match_v6.group(2)
+                # print("dfbfbrtbwrbrbrtbr---1.6")
+                domain_name = ip_match_v6.group(2)
+                ipv6_address = socket.getaddrinfo(domain_name, None, socket.AF_INET6)
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
                 # Get geolocation based on IPv6 address using ip-api.com
@@ -72,7 +74,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_data_v6 = geolocation_response_v6.json()
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
-                print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
+                # print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
                 data_point[2] = ipv6_address
                 data_point[4] = str(latency_v6)
                 data_point[6] = geolocation_info_v6
