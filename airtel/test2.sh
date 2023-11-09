@@ -1,80 +1,54 @@
 #!/bin/bash
 
+# Specify the starting time in HH:MM format (24-hour format)
+start_time="20:50"  # Set your desired start time here
+
+# Number of days to run the script
+total_days=1
+
 # Path to your Python script
-script_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
+script1_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
 script2_path="/data/data/com.termux/files/home/pingdata_collection/airtel/tracerouteData.py"
-
-data_dir="/data/data/com.termux/files/home/pingdata_collection/airtel/data"
-
-# Check if the data directory exists, and if not, create it
-if [ ! -d "$data_dir" ]; then
-  mkdir -p "$data_dir"
-fi
 
 # Path to your Git repository
 repository_path="/data/data/com.termux/files/home/pingdata_collection"
 
-# Specify the starting time as "1645" for 16:45
-start_time="2035"  # Use your desired start time in HHMM format
+# Get the current date in 'YYYY-MM-DD' format
+current_date=$(date +'%Y-%m-%d')
 
-# Specify the starting date in 'YYYY-MM-DD' format
-start_date="2023-11-09"  # Use your desired starting date
+# Calculate the timestamp of the start time
+start_timestamp=$(date -d "$current_date $start_time" +'%s')
 
-# Specify the number of days to run
-days_to_run=1
-iteration=0
+# Start loop to run the script for 15 days
+for ((day=1; day<=$total_days; day++)); do
+    # Calculate the timestamp for the next run
+    next_run_timestamp=$((start_timestamp + (day - 1) * 86400))  # 86400 seconds in a day
 
-# Run the script once a day for 15 days starting from the specified date
-while [ $iteration -lt $days_to_run ]; do
-  # Get the current date in 'YYYY-MM-DD' format
-    current_date=$(date -d "$start_date + $iteration days" +'%Y-%m-%d')
+    # Calculate the wait time until the next run
+    wait_time=$((next_run_timestamp - $(date +'%s')))
 
-    # Check if it's the time to run
-    current_time=$(date +'%H%M')
-    if [ "$current_time" -ge "$start_time" ]; then
-        echo "Running the script for $current_date at $current_time..."
-
-        # Loop for 4 iterations
-        for ((iter=0; iter<4; iter++)); do
-            execution_time="$current_date $start_time"
-
-            echo "Iteration $((iter + 1)) running..."
-
-            # Schedule the script to run in the background
-            python3 "$script_path" &
-
-            # Wait for the current iteration to complete
-            wait
-
-            # Print a message for each iteration
-            echo "Iteration $((iter + 1)) completed"
-
-        done
-
-        # After running script1 four times, execute script2
-        echo "Executing traceroute data collection..."
-        python3 "$script2_path"
-
-        # Configure your Git identity
-        git config --global user.email "rishabh20399@iiitd.ac.in"
-        git config --global user.name "rishabh20399"
-        # git config --global init.defaultBranch main
-
-        # After all 4 iterations, commit and push changes to Git
-        cd /data/data/com.termux/files/home/pingdata_collection
-        git remote set-url origin git@github.com:rishabh20399/pingdata_collection.git
-
-        git checkout -b my-changes
-        git add /data/data/com.termux/files/home/pingdata_collection/airtel/data
-        git commit -m "Add files from data"
-        git push origin my-changes
-
-    else
-        echo "Waiting for the scheduled time..."
-        sleep 10  # Sleep for 10 secs before checking the time again
+    # Check if the wait time is negative (in case the current time is after the scheduled time)
+    if [ $wait_time -lt 0 ]; then
+        # The next run should be scheduled for the same time on the next day
+        wait_time=$((wait_time + 86400))  # 86400 seconds in a day
     fi
 
-    # Increment the iteration count
-    iteration=$((iteration + 1))
+    # Wait until the next run time
+    sleep $wait_time
 
+    # Print a message for each iteration
+    echo "Day $day: Running at $(date +'%H:%M:%S')..."
+
+    # Schedule the script to run in the background and detach it from the terminal
+    nohup python3 "$script1_path" >/dev/null 2>&1 &
+
+    # Run script2 in the background
+    nohup python3 "$script2_path" >/dev/null 2>&1 &
+done
+
+# You can add code here to commit and push your changes to Git
+
+# Keep the script running in the background indefinitely
+while true; do
+    sleep 3600  # Sleep for 1 hour to keep the script active
 done
