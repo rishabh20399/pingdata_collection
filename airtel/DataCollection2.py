@@ -58,7 +58,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000
 
             # IPv6 result
-            ip_match_v6 = re.search(r'PING (.+?) \(\D+\) ', ping_result_v6)
+            ip_match_v6 = re.search(r'PING (.+?)\(([^)]+)\)', ping_result_v6)
             latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
 
             print(ip_match_v6)
