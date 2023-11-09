@@ -46,6 +46,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
 
             # for i in range(len(data)):
                 # if data[num][0] == domain:
+                print("dfbfbrtbwrbrbrtbr---2")
                 data_point[1] = ipv4_address
                 data_point[3] = str(latency_v4)
                 data_point[5] = geolocation_info_v4
@@ -74,7 +75,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
 
             # for i in range(len(data)):
             # if data[num][0] == domain:
-                print(ipv6_address+" "+latency_v6+" "+geolocation_info_v6+""+execution_time_ms_v6)
+                print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
                 data_point[2] = ipv6_address
                 data_point[4] = str(latency_v6)
                 data_point[6] = geolocation_info_v6
