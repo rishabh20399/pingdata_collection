@@ -44,16 +44,13 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_data_v4 = geolocation_response_v4.json()
                 geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
 
-            # for i in range(len(data)):
-                # if data[num][0] == domain:
-                print("dfbfbrtbwrbrbrtbr---2")
+                print("dfbfbrtbwrbrbrtbr---1")
                 data_point[1] = ipv4_address
                 data_point[3] = str(latency_v4)
                 data_point[5] = geolocation_info_v4
                 data_point[7] = str(execution_time_ms_v4)
-                # break
 
-
+            print("dfbfbrtbwrbrbrtbr---1.5")
             # Run the ping6 command for IPv6
             start_time = datetime.now()
             ping_result_v6 = subprocess.check_output(['ping6', '-c', '1', '-s', str(ping_size), domain], text=True)
@@ -65,6 +62,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
 
             if ip_match_v6 and latency_match_v6:
+                print("dfbfbrtbwrbrbrtbr---1.6")
                 ipv6_address = ip_match_v6.group(2)
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
@@ -73,17 +71,12 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_data_v6 = geolocation_response_v6.json()
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
-            # for i in range(len(data)):
-            # if data[num][0] == domain:
                 print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
                 data_point[2] = ipv6_address
                 data_point[4] = str(latency_v6)
                 data_point[6] = geolocation_info_v6
                 data_point[8] = str(execution_time_ms_v6)
-                # break
-                # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
-                # data.append(row)
-            
+
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
 
