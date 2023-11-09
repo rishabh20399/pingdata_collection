@@ -17,9 +17,12 @@ def collect_ping_data(num, domain, ping_count, ping_size):
     for _ in range(ping_count):
         # data.append([""] * 9)
         # data[num][0] =domain
+
+        data_point = [""] * 9
+        data_point[0] = domain
         try:
-            data_point = [""] * 9
-            data_point[0] = domain
+            # data_point = [""] * 9
+            # data_point[0] = domain
 
             # Run the ping command for IPv4
             start_time = datetime.now()
@@ -61,7 +64,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
 
             if ip_match_v6 and latency_match_v6:
-                ipv6_address = ip_match_v6.group(1)
+                ipv6_address = ip_match_v6.group(2)
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
                 # Get geolocation based on IPv6 address using ip-api.com
@@ -78,11 +81,11 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 # break
                 # row = [domain_name, ipv4_address, ipv6_address, str(latency_v4), str(latency_v6), geolocation_info_v4, geolocation_info_v6, str(execution_time_ms_v4), execution_time_ms_v6]
                 # data.append(row)
-            data.append(data_point)
-
+            
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
 
+        data.append(data_point)
         num +=1 
 
     return data
@@ -108,12 +111,17 @@ os.makedirs(day_dir, exist_ok=True)
 timestamp_str = now.strftime("%H_%M_%S")
 csv_file = os.path.join(day_dir, f'{timestamp_str}.csv')
 
+# Initialize the data list
+data = []
+
 # Collect and append data for each domain
+
+# for domain in domain_names:
+#     data = collect_ping_data(num, domain, ping_count, ping_size)
+#     num +=ping_count
+
 for domain in domain_names:
-    data = collect_ping_data(num, domain, ping_count, ping_size)
-    num +=ping_count
-
-
+    data.extend(collect_ping_data(domain, ping_count, ping_size))
 
 # Append data to the CSV file
 with open(csv_file, 'a', newline='') as csvf:
