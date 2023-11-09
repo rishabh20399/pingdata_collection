@@ -1,117 +1,135 @@
 import subprocess
 import requests
 import re
-import pandas as pd
+import numpy as np
 from datetime import datetime
 import os
+import csv
+import socket
+
+# Function to collect ping data for a domain
+def collect_ping_data(num, domain, ping_count, ping_size):
+    # Lists to store data for each ping
+    data = []
+    
+    # for i in range(ping_count):
+        
+
+    for _ in range(ping_count):
+        # data.append([""] * 9)
+        # data[num][0] =domain
+
+        data_point = [""] * 9
+        data_point[0] = domain
+        try:
+            # data_point = [""] * 9
+            # data_point[0] = domain
+
+            # Run the ping command for IPv4
+            start_time = datetime.now()
+            ping_result_v4 = subprocess.check_output(['ping', '-c', '1', '-s', str(ping_size), domain], text=True)
+            end_time = datetime.now()
+            execution_time_ms_v4 = (end_time - start_time).total_seconds() * 1000
+
+            # IPv4 result
+            ip_match_v4 = re.search(r'PING (.+) \((\d+\.\d+\.\d+\.\d+)\)', ping_result_v4)
+            latency_match_v4 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v4)
+
+            if ip_match_v4 and latency_match_v4:
+                # domain_name = domain
+                ipv4_address = ip_match_v4.group(2)
+                latency_v4 = [float(latency) for latency in latency_match_v4]
+
+                # Get geolocation based on IPv4 address using ip-api.com
+                geolocation_response_v4 = requests.get(f'http://ip-api.com/json/{ipv4_address}')
+                geolocation_data_v4 = geolocation_response_v4.json()
+                geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
+
+                # print("dfbfbrtbwrbrbrtbr---1")
+                data_point[1] = ipv4_address
+                data_point[3] = str(latency_v4)
+                data_point[5] = geolocation_info_v4
+                data_point[7] = str(execution_time_ms_v4)
+
+            # print("dfbfbrtbwrbrbrtbr---1.5")
+            # Run the ping6 command for IPv6
+            start_time = datetime.now()
+            ping_result_v6 = subprocess.check_output(['ping6', '-c', '1', '-s', str(ping_size), domain], text=True)
+            end_time = datetime.now()
+            execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000
+
+            # IPv6 result
+            ip_match_v6 = re.search(r'PING (.+?)\(([^)]+)\)', ping_result_v6)
+            latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
+
+            # print(latency_match_v6)
+            if ip_match_v6 and latency_match_v6:
+                # print("dfbfbrtbwrbrbrtbr---1.6")
+                domain_name = ip_match_v6.group(2)
+                ipv6_address = socket.getaddrinfo(domain_name, None, socket.AF_INET6)
+                latency_v6 = [float(latency) for latency in latency_match_v6]
+
+                # Get geolocation based on IPv6 address using ip-api.com
+                geolocation_response_v6 = requests.get(f'http://ip-api.com/json/{domain_name}')
+                geolocation_data_v6 = geolocation_response_v6.json()
+                geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
+
+                # print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
+                data_point[2] = ipv6_address[0][4][0]
+                data_point[4] = str(latency_v6)
+                data_point[6] = geolocation_info_v6
+                data_point[8] = str(execution_time_ms_v6)
+
+        except subprocess.CalledProcessError as e:
+            print(f"Error pinging {domain}: {e}")
+
+        data.append(data_point)
+        num +=1 
+
+    return data
 
 # Read websites from a text file
-with open('D:\Sem7\WN\Project\WNproject_Group15\domain_list2.txt', 'r') as file:
+with open('/data/data/com.termux/files/home/pingdata_collection/airtel/final_domains.txt', 'r') as file:
     domain_names = file.read().splitlines()
+
+# Set the number of pings and ping size
+ping_count = 40
+ping_size = 64
+num=0
 
 # Get the current date and time
 now = datetime.now()
 date_str = now.strftime("%d_%m_%y")
-time_str = now.strftime("%H_%M_%S")
 
-# Specify the directory where Excel files are stored
-excel_dir = 'D:\\Sem7\\WN\\Project\\WNproject_Group15\\airtel'
+# Create a subdirectory for the current day
+day_dir = os.path.join('/data/data/com.termux/files/home/pingdata_collection/airtel/data/', date_str)
+os.makedirs(day_dir, exist_ok=True)
 
-# Check if the Excel file for the current day already exists or create a new one
-excel_file = os.path.join(excel_dir, f'{date_str}.xlsx')
-if not os.path.exists(excel_file):
-    # Create a DataFrame with columns but no data
-    df_empty = pd.DataFrame(columns=['Domain', 'IPv4 address', 'IPv6 address', 'IPv4 latency (ms)', 'IPv6 latency (ms)', 'IPv4 geolocation', 'IPv6 geolocation', 'Time Taken (ms) IPv4', 'Time Taken (ms) IPv6'])
-    with pd.ExcelWriter(excel_file, engine='openpyxl') as excel_writer:
-        df_empty.to_excel(excel_writer, index=False)
+# Create a CSV file with a timestamp as the name for the current run
+timestamp_str = now.strftime("%H_%M_%S")
+csv_file = os.path.join(day_dir, f'{timestamp_str}.csv')
 
-# Lists to store results for the current timestamp
-domains = []
-ipv4_addresses = []
-ipv6_addresses = []
-latency_v4_list = []
-latency_v6_list = []
-geolocation_v4_list = []
-geolocation_v6_list = []
-time_taken_v4_list = []  # Time taken by IPv4
-time_taken_v6_list = []  # Time taken by IPv6
+# Initialize the data list
+data = []
+
+# Collect and append data for each domain
+
+# for domain in domain_names:
+#     data = collect_ping_data(num, domain, ping_count, ping_size)
+#     num +=ping_count
 
 for domain in domain_names:
-    try:
-        # Run the ping command for IPv4
-        start_time = datetime.now()
-        ping_result_v4 = subprocess.check_output(['ping', '-4', domain], text=True)
-        end_time = datetime.now()
-        execution_time_ms_v4 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
-        # IPv4 result
-        ip_match_v4 = re.search(r'Pinging (.+?) \[(\d+\.\d+\.\d+\.\d+)\]', ping_result_v4)
-        latency_match_v4 = re.search(r'time=(\d+)ms', ping_result_v4)
+    data.extend(collect_ping_data(num, domain, ping_count, ping_size))
 
-        # Run the ping command for IPv6
-        start_time = datetime.now()
-        ping_result_v6 = subprocess.check_output(['ping', '-6', domain], text=True)
-        end_time = datetime.now()
-        execution_time_ms_v6 = (end_time - start_time).total_seconds() * 1000  # Calculate time taken in milliseconds
-        # IPv6 result
-        ip_match_v6 = re.search(r'Pinging (.+?) \[([0-9a-fA-F:]+)\]', ping_result_v6)
-        latency_match_v6 = re.search(r'time=(\d+)ms', ping_result_v6)
+# Append data to the CSV file
+with open(csv_file, 'a', newline='') as csvf:
+    # Add the column names if they are not already added
+    csv_writer = csv.writer(csvf)
+    if os.path.getsize(csv_file) == 0:
+        csv_writer.writerow(["Domain", "IPv4 Address", "IPv6 Address", "IPv4 Latency (ms)", "IPv6 Latency (ms)", "IPv4 Geolocation", "IPv6 Geolocation", "IPv4 Execution Time (ms)", "IPv6 Execution Time (ms)"])
 
-        if ip_match_v4 and latency_match_v4:
-            domain_name = domain
-            ipv4_address = ip_match_v4.group(2)
-            latency_v4 = int(latency_match_v4.group(1))
+    for row in data:
+        # Append the data to the CSV file
+        csv_writer.writerow(row)
 
-            # Get geolocation based on IPv4 address using ip-api.com
-            geolocation_response_v4 = requests.get(f'http://ip-api.com/json/{ipv4_address}')
-            geolocation_data_v4 = geolocation_response_v4.json()
-            geolocation_info_v4 = f"{geolocation_data_v4['city']}, {geolocation_data_v4['regionName']}, {geolocation_data_v4['country']}"
-
-            domains.append(domain_name)
-            ipv4_addresses.append(ipv4_address)
-            # ipv6_addresses.append("")
-            latency_v4_list.append(latency_v4)
-            # latency_v6_list.append("")
-            geolocation_v4_list.append(geolocation_info_v4)
-            # geolocation_v6_list.append("")
-            time_taken_v4_list.append(execution_time_ms_v4)
-            # time_taken_v6_list.append("")
-
-        if ip_match_v6 and latency_match_v6:
-            domain_name = domain
-            ipv6_address = ip_match_v6.group(2)
-            latency_v6 = int(latency_match_v6.group(1))
-
-            # Get geolocation based on IPv6 address using ip-api.com
-            geolocation_response_v6 = requests.get(f'http://ip-api.com/json/{ipv6_address}')
-            geolocation_data_v6 = geolocation_response_v6.json()
-            geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
-
-            # domains.append(domain_name)
-            # ipv4_addresses.append(ipv4_address)
-            ipv6_addresses.append(ipv6_address)
-            # latency_v4_list.append(latency_v4)
-            latency_v6_list.append(latency_v6)
-            # geolocation_v4_list.append(geolocation_info_v4)
-            geolocation_v6_list.append(geolocation_info_v6)
-            # time_taken_v4_list.append(execution_time_ms_v4)
-            time_taken_v6_list.append(execution_time_ms_v6)
-
-    except subprocess.CalledProcessError as e:
-        print(f"Error pinging {domain}: {e}")
-
-# Create a DataFrame for the current timestamp
-df = pd.DataFrame({
-    'Domain': domains,
-    'IPv4 address': ipv4_addresses,
-    'IPv6 address': ipv6_addresses,
-    'IPv4 latency (ms)': latency_v4_list,
-    'IPv6 latency (ms)': latency_v6_list,
-    'IPv4 geolocation': geolocation_v4_list,
-    'IPv6 geolocation': geolocation_v6_list,
-    'Time Taken (ms) IPv4': time_taken_v4_list,
-    'Time Taken (ms) IPv6': time_taken_v6_list
-})
-
-# Save the DataFrame to the Excel writer with the time as the sheet name
-with pd.ExcelWriter(excel_file, engine='openpyxl', mode='a') as excel_writer:
-    df.to_excel(excel_writer, sheet_name=time_str, index=False)
+print(f"Data saved to {csv_file}")
