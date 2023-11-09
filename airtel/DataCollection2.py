@@ -61,6 +61,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
             ip_match_v6 = re.search(r'PING (.+?) \(([^)]+)\)', ping_result_v6)
             latency_match_v6 = re.findall(r'time=(\d+\.\d+) ms', ping_result_v6)
 
+            print(ip_match_v6+" "+ latency_match_v6+"dfbfbrtbwrbrbrtbr---1.55"+ping_result_v6)
             if ip_match_v6 and latency_match_v6:
                 print("dfbfbrtbwrbrbrtbr---1.6")
                 ipv6_address = ip_match_v6.group(2)
