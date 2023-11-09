@@ -121,7 +121,7 @@ data = []
 #     num +=ping_count
 
 for domain in domain_names:
-    data.extend(collect_ping_data(domain, ping_count, ping_size))
+    data.extend(collect_ping_data(num, domain, ping_count, ping_size))
 
 # Append data to the CSV file
 with open(csv_file, 'a', newline='') as csvf:
