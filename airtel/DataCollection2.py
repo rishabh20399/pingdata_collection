@@ -70,7 +70,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
                 # Get geolocation based on IPv6 address using ip-api.com
-                geolocation_response_v6 = requests.get(f'http://ip-api.com/json/{ipv6_address}')
+                geolocation_response_v6 = requests.get(f'http://ip-api.com/json/{domain_name}')
                 geolocation_data_v6 = geolocation_response_v6.json()
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
