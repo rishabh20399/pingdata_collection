@@ -89,7 +89,7 @@ def collect_ping_data(num, domain, ping_count, ping_size):
     return data
 
 # Read websites from a text file
-with open('/data/data/com.termux/files/home/pingdata_collection/airtel/domain_list2.txt', 'r') as file:
+with open('/data/data/com.termux/files/home/pingdata_collection/airtel/final_domains.txt', 'r') as file:
     domain_names = file.read().splitlines()
 
 # Set the number of pings and ping size
