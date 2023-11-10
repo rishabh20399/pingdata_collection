@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Specify the starting time in HH:MM format (24-hour format)
-start_time="13:15"  # Set your desired start time here
+start_time="21:20"  # Set your desired start time here
 
 # Number of days to run the scripts
-total_days=7
+total_days=1
 
 # Path to your Python scripts
 script1_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
@@ -33,6 +33,8 @@ for ((day=1; day<=$total_days; day++)); do
         wait_time=$((wait_time + 86400))  # 86400 seconds in a day
     fi
 
+    echo "Day $day: Waiting for $(date -d "+$wait_time seconds" +'%H:%M:%S')..."
+
     # Wait until the next run time
     sleep $wait_time
 
@@ -40,9 +42,11 @@ for ((day=1; day<=$total_days; day++)); do
     echo "Day $day: Running at $(date +'%H:%M:%S')..."
 
     # Execute the first script
+    echo "Running ping data collection..."
     python3 "$script1_path"
 
     # Execute the second script
+    echo "Running traceroute data collection..."
     python3 "$script2_path"
 
     # Configure your Git identity
