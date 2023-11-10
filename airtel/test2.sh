@@ -62,7 +62,7 @@ for ((day=1; day<=$total_days; day++)); do
     git commit -m "Add files from data"
     git push origin my-changes
 
-    # Return to the script's directory
-    cd -
+    echo "Done for the day..."
+
 
 done
