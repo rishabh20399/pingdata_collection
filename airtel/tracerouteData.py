@@ -5,7 +5,7 @@ from datetime import datetime
 import subprocess
 
 # Input text file with domain names
-input_file = "domain_list.txt"
+input_file = "final_domains.txt"
 
 # Get the current date and time
 now = datetime.now()
