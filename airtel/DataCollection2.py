@@ -64,14 +64,9 @@ def collect_ping_data(num, domain, ping_count, ping_size):
 
             # print(latency_match_v6)
             if ip_match_v6 and latency_match_v6:
-                
                 # print("dfbfbrtbwrbrbrtbr---1.6")
                 domain_name = ip_match_v6.group(2)
-                ipv6_address = socket.getaddrinfo(domain_name, None, socket.AF_INET6)
-                if ipv6_address:
-                    ipv6_address = ipv6_address[0][4][0]  # Extract the IPv6 address from the first tuple
-                else:
-                    ipv6_address = None  # Set to None if no IPv6 address is found
+                ipv6_address = None  # Initialize to None
                 latency_v6 = [float(latency) for latency in latency_match_v6]
 
                 # Get geolocation based on IPv6 address using ip-api.com
@@ -79,11 +74,16 @@ def collect_ping_data(num, domain, ping_count, ping_size):
                 geolocation_data_v6 = geolocation_response_v6.json()
                 geolocation_info_v6 = f"{geolocation_data_v6['city']}, {geolocation_data_v6['regionName']}, {geolocation_data_v6['country']}"
 
+                # Extract IPv6 address from the regex match
+                ipv6_match = ip_match_v6.group(1)
+                ipv6_address = socket.getaddrinfo(ipv6_match, None, socket.AF_INET6)[0][4][0]
+
                 # print("dfbfbrtbwrbrbrtbr---2" + ipv6_address)
                 data_point[2] = ipv6_address
                 data_point[4] = str(latency_v6)
                 data_point[6] = geolocation_info_v6
                 data_point[8] = str(execution_time_ms_v6)
+
 
         except subprocess.CalledProcessError as e:
             print(f"Error pinging {domain}: {e}")
