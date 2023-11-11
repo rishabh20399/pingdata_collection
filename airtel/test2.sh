@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the starting time in HH:MM format (24-hour format)
-start_time="18:00"  # Set your desired start time here
+start_time="20:06"  # Set your desired start time here
 
 # Number of days to run the scripts
 total_days=1
