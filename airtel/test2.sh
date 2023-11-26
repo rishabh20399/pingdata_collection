@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the starting time in HH:MM format (24-hour format)
-start_time="14:52"  # Set your desired start time here
+start_time="15:05"  # Set your desired start time here
 
 # Number of days to run the scripts
 total_days=1
@@ -25,7 +25,7 @@ for ((day=1; day<=$total_days; day++)); do
     next_run_timestamp=$((start_timestamp + (day - 1) * 86400))  # 86400 seconds in a day
 
     # Calculate the wait time until the next run
-    wait_time=$((next_run_timestamp - $(date +'%s')))
+    wait_time=$(next_run_timestamp - $(date +'%s'))
 
     # Check if the wait time is negative (in case the current time is after the scheduled time)
     if [ $wait_time -lt 0 ]; then
