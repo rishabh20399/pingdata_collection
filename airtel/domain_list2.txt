@@ -28,13 +28,3 @@ adobe.com
 gimp.org
 audacityteam.org
 linux.org
-ubuntu.com
-debian.org
-fedoraproject.org
-archlinux.org
-centos.org
-opensuse.org
-kernel.org
-postgresql.org
-sqlite.org
-nodejs.org
