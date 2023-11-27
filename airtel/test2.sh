@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Specify the starting time in HH:MM format (24-hour format)
-start_time="12:27"  # Set your desired start time here
+start_time="04:00"  # Set your desired start time here
 
 # Number of days to run the scripts
-total_days=1
+total_days=7
 
 # Path to your Python scripts
 script1_path="/data/data/com.termux/files/home/pingdata_collection/airtel/DataCollection2.py"
