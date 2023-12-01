@@ -98,7 +98,7 @@ with open('/data/data/com.termux/files/home/pingdata_collection/airtel/domain_li
     domain_names = file.read().splitlines()
 
 # Set the number of pings and ping size
-ping_count = 40
+ping_count = 20
 ping_size = 64
 num=0
 
